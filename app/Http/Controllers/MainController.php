@@ -31,7 +31,7 @@ class MainController extends Controller
             $productsQuery->new();
         });
 
-        $products = $productsQuery->paginate(9);
+        $products = $productsQuery->orderByDesc('count')->orderByDesc('price')->paginate(9);
         return view('index', compact('products'));
     }
 
@@ -41,7 +41,7 @@ class MainController extends Controller
     }
 
     public function category($code) {
-        $category_info = Category::where('code', $code)->addSelect('id', 'name', 'description')->first();
+        $category_info = Category::where('code', $code)->select(['id', 'name', 'description'])->first();
         $category = Product::with('category')->where('category_id', $category_info->id)->get();
         return view('category', compact('category', 'category_info'));
     }

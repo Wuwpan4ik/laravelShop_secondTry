@@ -44,3 +44,15 @@ div.form-inline form {
     color: #fff;
     background-color: #dc3545;
 }
+
+.product__form {
+    display: inline-block;
+}
+
+.product__card {
+    height: 320px;
+}
+
+.product__card-opacity {
+    opacity: 0.6;
+}

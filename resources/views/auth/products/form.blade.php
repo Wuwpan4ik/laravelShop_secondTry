@@ -79,6 +79,14 @@
                 </div>
             </div>
 
+            <div class="input-group row">
+                <label for="count" class="col-sm-2 col-form-label">Название: </label>
+                <div class="col-sm-6">
+                    <input type="number" class="form-control" name="count" id="count"
+                           value="{{ old('count', isset($product) ? $product->count : null) }}">
+                </div>
+            </div>
+
             @foreach([
                 'hit' => 'Хиты',
                 'new' => 'Новинки',

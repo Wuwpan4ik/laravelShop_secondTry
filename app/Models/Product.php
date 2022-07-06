@@ -5,16 +5,19 @@ namespace App\Models;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = ['name', 'code', 'image', 'price', 'description', 'category_id', 'hit', 'recommended', 'new'];
 
     public function category() {
         return $this->belongsTo(Category::class);
     }
 
-    public function getPriceForCount()
+    public function calculatePriceForCount()
     {
         if (!is_null($this->pivot)) {
             return $this->price * $this->pivot->count;
@@ -49,6 +52,10 @@ class Product extends Model
         $this->attributes['recommended'] = $value === 'on' ? 1 : 0;
     }
 
+    public function isAvailable()
+    {
+        return $this->count > 0;
+    }
 
     public function isHit()
     {

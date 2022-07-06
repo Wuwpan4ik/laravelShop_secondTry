@@ -7,10 +7,14 @@
     <p>Цена: <b>{{ $product->price }} руб.</b></p>
     <img src="{{ $product->image }}" alt="#">
     <p>{{ $product->description }}</p>
-    <form action="{{ route('basket-add', $product) }}" method="POST">
-        @csrf
-        <button type="submit" class="btn btn-primary">
-            В корзину
-        </button>
-    </form>
+    @if($product->isAvailable())
+        <form action="{{ route('basket-add', $product) }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-primary">
+                В корзину
+            </button>
+        </form>
+    @else
+        <p>Товара нет в наличие</p>
+    @endif
 @endsection

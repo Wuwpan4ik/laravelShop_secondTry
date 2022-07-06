@@ -25,7 +25,7 @@
             </tr>
             <tr>
                 <td>Картикна</td>
-                <td><img src="{{ $show }}" alt="#" height="240px"></td>
+                <td><img src="{{ $show }}" alt="#" height="100px"></td>
             </tr>
             <tr>
                 <td>Количество товаров</td>
