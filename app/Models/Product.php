@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'code', 'image', 'price', 'description', 'category_id'];
+    protected $fillable = ['name', 'code', 'image', 'price', 'description', 'category_id', 'hit', 'recommended', 'new'];
 
     public function category() {
         return $this->belongsTo(Category::class);
@@ -20,5 +20,48 @@ class Product extends Model
             return $this->price * $this->pivot->count;
         }
         return $this->price;
+    }
+
+    public function scopeHit($query) {
+        return $query->where('hit', 1);
+    }
+
+    public function scopeNew($query) {
+        return $query->where('new', 1);
+    }
+
+    public function scopeRecommended($query) {
+        return $query->where('recommended', 1);
+    }
+
+    public function setNewAttribute($value)
+    {
+        $this->attributes['new'] = $value === 'on' ? 1 : 0;
+    }
+
+    public function setHitAttribute($value)
+    {
+        $this->attributes['hit'] = $value === 'on' ? 1 : 0;
+    }
+
+    public function setRecommendedAttribute($value)
+    {
+        $this->attributes['recommended'] = $value === 'on' ? 1 : 0;
+    }
+
+
+    public function isHit()
+    {
+        return $this->hit === 1;
+    }
+
+    public function isNew()
+    {
+        return $this->new === 1;
+    }
+
+    public function isRecommended()
+    {
+        return $this->recommended === 1;
     }
 }

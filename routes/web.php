@@ -1,13 +1,15 @@
 <?php
 
+use App\Http\Controllers\ResetController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\BasketController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\OrderController as adminOrderController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Person\OrderController as personOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +22,7 @@ use App\Http\Controllers\Admin\ProductController;
 |
 */
 
+//Авторизации
 Auth::routes([
     'reset' => False,
     'confirm' => False,
@@ -31,21 +34,40 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/logout', 'logout')->name('get-logout');
 });
 
-Route::resource('categories', CategoryController::class);
 
+// Главные страницы
+Route::controller(MainController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
+
+    Route::get('/categories', 'categories')->name('categories');
+
+    Route::get('/categories/{code}', 'category')->name('category');
+
+    Route::get('categories/{category}/{product}', 'product')->name('product');
+});
+
+// Админ панель
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function (){
 
     Route::resource('categories', CategoryController::class);
 
     Route::resource('products', ProductController::class);
 
+    //Обнуление
+    Route::get('/reset',[ResetController::class, 'reset'])->name('reset');
+
     Route::namespace('Admin')->group(function () {
-        Route::get('/home', [OrderController::class, 'index'])->name('home');
+
+        Route::get('/orders/{order}', [adminOrderController::class, 'show'])->name('orders.show');
+
+        Route::get('/orders', [adminOrderController::class, 'index'])->name('home');
+
     });
 
 
 });
 
+//Работа с корзиной
 Route::controller(BasketController::class)->prefix('basket')->group(function () {
     Route::post('/add/{id}', 'basketAdd')->name('basket-add');
 
@@ -60,12 +82,15 @@ Route::controller(BasketController::class)->prefix('basket')->group(function () 
     });
 });
 
-Route::controller(MainController::class)->group(function () {
-    Route::get('/', 'index')->name('index');
 
-    Route::get('/categories', 'categories')->name('categories');
+// Персональные данные
+Route::group([
+    'middleware' => 'auth',
+    'namespace' => 'Person',
+    'as' => 'person.',
+    'prefix' => 'person',
+], function () {
+    Route::get('/orders', [personOrderController::class, 'index'])->name('orders.index');
 
-    Route::get('/categories/{code}', 'category')->name('category');
-
-    Route::get('/{category}/{product}', 'product')->name('product');
+    Route::get('/orders/{order}', [personOrderController::class, 'show'])->name('orders.show');
 });

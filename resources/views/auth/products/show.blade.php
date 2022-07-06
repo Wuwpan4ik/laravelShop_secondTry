@@ -35,6 +35,20 @@
                 <td>Картикна</td>
                 <td><img src="#" alt="#" height="240px"></td>
             </tr>
+            <tr>
+                <td>Лейблы</td>
+                <td>
+                    @if($product->isNew())
+                        <div class="badge badge-success">Новинка!</div>
+                    @endif
+                    @if($product->isRecommended())
+                        <div class="badge badge-warning">Рекомендуемое</div>
+                    @endif
+                    @if($product->isHit())
+                        <div class="badge badge-danger">Хит!</div>
+                    @endif
+                </td>
+            </tr>
             </tbody>
         </table>
         <form action="{{ route('products.destroy', $product) }}" method="POST">

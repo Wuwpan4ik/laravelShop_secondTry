@@ -88,6 +88,11 @@ class ProductController extends Controller
         } else {
             $params['image'] = $product->image;
         }
+        foreach (['hit', 'new', 'recommended'] as $fieldName) {
+            if (!isset($params[$fieldName])) {
+                $params[$fieldName] = 0;
+            }
+        }
         $product->update($params);
         return redirect()->route('products.index');
     }

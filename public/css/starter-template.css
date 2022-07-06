@@ -18,3 +18,29 @@ div.thumbnail img {
 div.form-inline form {
     display: inline;
 }
+
+.labels {
+    position: absolute;
+}
+
+.badge {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 12px;
+    padding: 12px;
+}
+
+.badge-success {
+    color: #fff;
+    background-color: #28a745;
+}
+
+.badge-danger {
+    color: #212529;
+    background-color: #ffc107;
+}
+
+.badge-warning {
+    color: #fff;
+    background-color: #dc3545;
+}

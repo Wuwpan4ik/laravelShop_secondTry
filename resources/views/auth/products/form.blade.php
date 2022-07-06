@@ -9,11 +9,12 @@
 @section('content')
     <div class="col-md-12">
         @isset($product)
-            <h1>Редактировать торва <b>{{ $product->name }}</b></h1>
+            <h1>Редактировать товар <b>{{ $product->name }}</b></h1>
         @else
             <h1>Добавить товар</h1>
         @endisset
     </div>
+
     <form method="POST" enctype="multipart/form-data"
     @isset($product)
         action="{{ route('products.update', $product) }}"
@@ -77,6 +78,26 @@
                     </label>
                 </div>
             </div>
+
+            @foreach([
+                'hit' => 'Хиты',
+                'new' => 'Новинки',
+                'recommended' => 'Рекомендованное'
+            ] as $field => $title)
+                <div class="form-group row">
+                    <label for="{{ $field }}" class="col-sm-2 col-form-label">{{ $title }}: </label>
+                    <div class="col-sm-6">
+                        <input type="checkbox" class="form-control" name="{{ $field }}" id="{{ $field }}"
+                           @if(isset($product) && $product->$field === 1)
+                               checked="checked"
+                           @endif
+                        >
+                    </div>
+                </div>
+            @endforeach
             <button class="btn btn-success">Сохранить</button>
     </form>
+    @foreach($errors->all() as $error)
+        <div class="col-3 alert alert-danger">{{ $error }}</div>
+    @endforeach
 @endsection

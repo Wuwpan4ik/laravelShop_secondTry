@@ -18,15 +18,14 @@ class CheckIsEmptyCart
     public function handle(Request $request, Closure $next)
     {
         $order_id = session('orderId');
+
         if (!is_null($order_id)) {
             $order = Order::find($order_id);
-        } else {
-            return redirect()->route('index');
+            if ($order->products->count() > 0) {
+                return $next($request);
+            }
         }
-        if ($order->products->count() < 1) {
-            session()->flash('warning', 'Ваша карзина пуста!');
-            return redirect()->route('index');
-        }
-        return $next($request);
+        session()->flash('warning', 'Ваша карзина пуста!');
+        return redirect()->route('index');
     }
 }

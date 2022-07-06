@@ -7,7 +7,7 @@
         <div class="panel">
             <a href="{{ route('category', ['code' => $category->code]) }}">
                 <h2>{{ $category->name }}</h2>
-                <img src="{{ Storage::url($category->image) }}" alt="#" height="250px">
+                <img src="{{ Storage::url($category->image) }}" alt="#" height="50px">
                 <p style="color: black; text-decoration: none;">
                     {{ $category->description }}
                 </p>

@@ -9,8 +9,15 @@ class Category extends Model
 {
     protected $fillable = ['name', 'code', 'description', 'image', 'id'];
 
-    public function products()
+    public function setRelation($relation, $value)
     {
-        return $this->hasMany(Product::class);
+        $this->relations[$relation] = $value;
+
+        return $this;
     }
+
+//    public function products()
+//    {
+//        return $this->hasMany(Product::class);
+//    }
 }

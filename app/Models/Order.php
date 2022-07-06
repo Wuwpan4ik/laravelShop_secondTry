@@ -47,5 +47,6 @@ class Order extends Model
         'name',
         'status',
         'phone',
+        'id'
     ];
 }

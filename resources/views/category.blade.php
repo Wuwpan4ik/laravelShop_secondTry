@@ -1,16 +1,16 @@
 @extends('layouts.master')
 @section('title')
-    {{ $category->name }}
+    {{ $category_info->name }}
 @endsection
 @section('content')
     <h1>
-        {{ $category->name }}
+        {{ $category_info->name }}
     </h1>
     <p>
-        {{ $category->description }}
+        {{ $category_info->description }}
     </p>
     <div class="row">
-        @foreach($category->products as $product)
+        @foreach($category as $product)
             @include('layouts.card')
         @endforeach
     </div>

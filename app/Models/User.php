@@ -45,4 +45,10 @@ class User extends Authenticatable
     public function isAdmin() {
         return $this->is_admin === 1;
     }
+
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+
+        return $this->hasMany(Order::class);
+    }
 }
