@@ -17,15 +17,15 @@ class Order extends Model
     {
         $sum = 0;
         foreach ($this->products as $product) {
-            $sum += $product->getPriceForCount();
+            $sum += $product->calculatePriceForCount();
         }
         return $sum;
     }
 
-    public function saveOrder($order, $phone, $name)
+    public function saveOrder($phone, $name)
     {
         if ($this->status == 0) {
-            $order->update([
+            $this->update([
                 'status' => 1,
                 'name' => $name,
                 'phone' => $phone
@@ -47,6 +47,7 @@ class Order extends Model
         'name',
         'status',
         'phone',
-        'id'
+        'id',
+        'user_id'
     ];
 }

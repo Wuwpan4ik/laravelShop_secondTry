@@ -17,14 +17,6 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function calculatePriceForCount()
-    {
-        if (!is_null($this->pivot)) {
-            return $this->price * $this->pivot->count;
-        }
-        return $this->price;
-    }
-
     public function scopeHit($query) {
         return $query->where('hit', 1);
     }
@@ -70,5 +62,19 @@ class Product extends Model
     public function isRecommended()
     {
         return $this->recommended === 1;
+    }
+
+    public function calculatePriceForCount()
+    {
+        if (!is_null($this->pivot)) {
+            return $this->price * $this->pivot->count;
+        }
+        return $this->price;
+    }
+
+    public function recalculateCountProducts($count)
+    {
+        $this->count -= $count;
+        $this->save();
     }
 }

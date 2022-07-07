@@ -46,6 +46,7 @@ Route::controller(MainController::class)->group(function () {
     Route::get('categories/{category}/{product}', 'product')->name('product');
 });
 
+
 // Админ панель
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function (){
 
@@ -67,9 +68,10 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function (){
 
 });
 
+
 //Работа с корзиной
-Route::controller(BasketController::class)->prefix('basket')->group(function () {
-    Route::post('/add/{id}', 'basketAdd')->name('basket-add');
+Route::controller(BasketController::class)->middleware('auth')->prefix('basket')->group(function () {
+    Route::post('/add/{product}', 'basketAdd')->name('basket-add');
 
     Route::middleware(['is_not_empty_cart'])->group(function (){
         Route::get('/', 'basket')->name('basket');
@@ -78,7 +80,7 @@ Route::controller(BasketController::class)->prefix('basket')->group(function () 
 
         Route::post('/place', 'basketConfirm')->name('basket-confirm');
 
-        Route::post('/remove/{id}', 'basketRemove')->name('basket-remove');
+        Route::post('/remove/{product}', 'basketRemove')->name('basket-remove');
     });
 });
 
