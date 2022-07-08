@@ -78,15 +78,15 @@
                     </label>
                 </div>
             </div>
-
+            <br>
             <div class="input-group row">
-                <label for="count" class="col-sm-2 col-form-label">Название: </label>
+                <label for="count" class="col-sm-2 col-form-label">Количество: </label>
                 <div class="col-sm-6">
                     <input type="number" class="form-control" name="count" id="count"
                            value="{{ old('count', isset($product) ? $product->count : null) }}">
                 </div>
             </div>
-
+            <br>
             @foreach([
                 'hit' => 'Хиты',
                 'new' => 'Новинки',
@@ -103,7 +103,7 @@
                     </div>
                 </div>
             @endforeach
-            <button class="btn btn-success">Сохранить</button>
+            <button type="submit" class="btn btn-success">Сохранить</button>
     </form>
     @foreach($errors->all() as $error)
         <div class="col-3 alert alert-danger">{{ $error }}</div>

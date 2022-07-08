@@ -44,6 +44,8 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/categories/{code}', 'category')->name('category');
 
     Route::get('categories/{category}/{product}', 'product')->name('product');
+
+    Route::post('subscription/{product}', 'subscribe')->name('subscribe');
 });
 
 

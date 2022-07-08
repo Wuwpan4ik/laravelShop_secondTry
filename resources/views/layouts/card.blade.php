@@ -2,13 +2,13 @@
     <div class="thumbnail">
         <div class="labels">
             @if($product->isNew())
-                <div class="badge badge-success">Новинка!</div>
+                <div class="badge badge-success">{{ __('main.new_cart') }}</div>
             @endif
             @if($product->isRecommended())
-                <div class="badge badge-warning">Рекомендуемое</div>
+                <div class="badge badge-warning">{{ __('main.recommend_cart') }}</div>
             @endif
             @if($product->isHit())
-                <div class="badge badge-danger">Хит!</div>
+                <div class="badge badge-danger">{{ __('main.hit_cart') }}</div>
             @endif
         </div>
         <img style="height: 150px" src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}">
@@ -19,7 +19,7 @@
                 <form class="product__form" action="{{ route('basket-add', $product) }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-primary">
-                        В корзину
+                        {{ __('main.in_cart') }}
                     </button>
                 </form>
             @else

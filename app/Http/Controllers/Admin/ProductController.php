@@ -94,6 +94,7 @@ class ProductController extends Controller
                 $params[$fieldName] = 0;
             }
         }
+        $product->count = (int) $request->count;
         $product->update($params);
         return redirect()->route('products.index');
     }

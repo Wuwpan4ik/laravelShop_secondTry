@@ -1,12 +1,12 @@
 @extends('layouts.master')
 @section('title')
-    Главная страница
+   : {{ __('main.main_page') }}
 @endsection
 @section('content')
     @foreach($errors->all() as $error)
         <div class="col-3 alert alert-danger">{{ $error }}</div>
     @endforeach
-    <h1>Все товары</h1>
+    <h1>{{ __('main.all_products') }}</h1>
     <form method="GET" action="{{ route('index') }}">
         <div class="filters row">
             <div class="col-sm-6 col-md-3">
@@ -19,22 +19,22 @@
             </div>
             <div class="col-sm-2 col-md-2">
                 <label for="hit">
-                    <input type="checkbox" name="hit" id="hit" @if(request()->hit) checked @endif> Хит
+                    <input type="checkbox" name="hit" id="hit" @if(request()->hit) checked @endif> {{ __('main.hit') }}
                 </label>
             </div>
             <div class="col-sm-2 col-md-2">
                 <label for="new">
-                    <input type="checkbox" name="new" id="new" @if(request()->new) checked @endif> Новинка
+                    <input type="checkbox" name="new" id="new" @if(request()->new) checked @endif> {{ __('main.new') }}
                 </label>
             </div>
             <div class="col-sm-2 col-md-2">
                 <label for="recommended">
-                    <input type="checkbox" name="recommended" id="recommended" @if(request()->recommended) checked @endif> Рекомендуем
+                    <input type="checkbox" name="recommended" id="recommended" @if(request()->recommended) checked @endif> {{ __('main.recommend') }}
                 </label>
             </div>
             <div class="col-sm-6 col-md-3">
-                <button type="submit" class="btn btn-primary">Фильтр</button>
-                <a href="{{ route("index") }}" class="btn btn-warning">Сброс</a>
+                <button type="submit" class="btn btn-primary">{{ __('main.filter') }}</button>
+                <a href="{{ route("index") }}" class="btn btn-warning">{{ __('main.reset') }}</a>
             </div>
         </div>
     </form>

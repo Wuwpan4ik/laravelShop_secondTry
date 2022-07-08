@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductsFilterRequest;
+use App\Http\Requests\SubscriptionRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class MainController extends Controller
 {
-    public function index(ProductsFilterRequest $request) {
-
+    public function index(ProductsFilterRequest $request)
+    {
         $price_from = $request->price_from === null ? 0 : $request->price_from;
         $price_to = $request->price_to === null ? 10000000 : $request->price_to;
 
@@ -35,19 +37,33 @@ class MainController extends Controller
         return view('index', compact('products'));
     }
 
-    public function categories() {
+    public function categories()
+    {
         $categories = Category::get();
         return view('categories', compact('categories'));
     }
 
-    public function category($code) {
+    public function category($code)
+    {
         $category_info = Category::where('code', $code)->select(['id', 'name', 'description'])->first();
         $category = Product::with('category')->where('category_id', $category_info->id)->get();
         return view('category', compact('category', 'category_info'));
     }
 
-    public function product($category, $product) {
+    public function product($category, $product)
+    {
         $product = Product::where('code', $product)->first();
         return view('product', compact('product'));
+    }
+
+    public function subscribe(SubscriptionRequest $request, Product $product)
+    {
+        $temp = [
+            'email' => $request->email,
+            'product_id' => $product->id,
+        ];
+        Subscription::create($temp);
+
+        return redirect()->back()->with('success', 'Спасибо, мы обязательно с вами свяжемся');
     }
 }
